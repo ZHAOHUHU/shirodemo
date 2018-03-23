@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shenzhen.teamway.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="shenzhen.teamway.bean.Role" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="roleDesc" property="roledesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="shenzhen.teamway.bean.Role" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into role (roleDesc)
+    values (#{roledesc,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="shenzhen.teamway.bean.Role" >
+    update role
+    set roleDesc = #{roledesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, roleDesc
+    from role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, roleDesc
+    from role
+  </select>
+</mapper>

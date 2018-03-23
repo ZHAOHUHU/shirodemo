@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shenzhen.teamway.dao.ResourcesMapper">
+    <resultMap id="BaseResultMap" type="shenzhen.teamway.bean.Resources">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="resUrl" property="resurl" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="parentId" property="parentid" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from resources
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="shenzhen.teamway.bean.Resources">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into resources (name, resUrl, type,
+        parentId, sort)
+        values (#{name,jdbcType=VARCHAR}, #{resurl,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},
+        #{parentid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="shenzhen.teamway.bean.Resources">
+    update resources
+    set name = #{name,jdbcType=VARCHAR},
+      resUrl = #{resurl,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, name, resUrl, type, parentId, sort
+    from resources
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+    <!--查询所有资源-->
+    <select id="selectAll" resultType="shenzhen.teamway.bean.Resources">
+    select id, name, resUrl, type, parentId, sort
+    from resources
+  </select>
+    <!--根据userid查询对应的权限以及角色-->
+    <select id="selectResourcesByUserId" resultType="shenzhen.teamway.bean.Resources">
+        select re.resUrl,re.name,re.id from resources re left join role_resources
+        rre on rre.resourcesId=re.id left join user_role ur on ur.roleId=rre.roleId WHERE
+        ur.userId=#{userid}
+        <if test="type != null">
+            AND re.type= #{type}
+        </if>
+        GROUP BY re.id
+        ORDER BY re.sort ASC
+    </select>
+
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shenzhen.teamway.dao.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="shenzhen.teamway.bean.UserRole" >
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="roleId" property="roleid" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="shenzhen.teamway.bean.UserRole" >
+    insert into user_role (userId, roleId)
+    values (#{userid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select userId, roleId
+    from user_role
+  </select>
+</mapper>

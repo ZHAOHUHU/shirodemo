@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Insert title here</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+投入很大try和她认识个
+<a href="/logout">推出</a>
+<a shiro:hasPermission="/resources/delete" href="/resources/delete">删除资源</a>
+</body>
+</html>
