@@ -1,0 +1,1 @@
+# shirodemo创建的shiro小demo，通过标签的支持进行动态的展示权限的内容
